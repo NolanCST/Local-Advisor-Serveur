@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('rates', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->binary('image');
-            $table->text('review', 500);
-            $table->integer('rate', 5);
+            $table->binary('image')->nullable();
+            $table->text('review')->nullable();
+            $table->integer('rate');
             $table->timestamps();
         });
     }
