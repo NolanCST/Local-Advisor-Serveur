@@ -17,7 +17,7 @@ class RegisterController extends Controller
             'password' => 'required|min:6',
             'pseudo' => 'required',
             'birthday' => 'required',
-            'status' => 'required',
+            'status' => 'required|numeric',
         ]);
 
         // Création d'un nouvel utilisateur
@@ -27,7 +27,7 @@ class RegisterController extends Controller
             'password' => Hash::make($validatedData['password']),
             'pseudo' => $validatedData['pseudo'],
             'birthday' => $validatedData['birthday'],
-            'status' => $validatedData['status'],
+            'status' => (int)$validatedData['status'],
         ]);
 
         if ($user) {
