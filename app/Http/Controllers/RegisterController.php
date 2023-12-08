@@ -11,15 +11,15 @@ class RegisterController extends Controller
     protected function create(Request $request)
     {
         // Validation des données du formulaire
-        // $request->validate([
-        //     'lastname' => 'required',
-        //     'firstname' => 'required',
-        //     'email' => 'required|email|unique:users',
-        //     'password' => 'required|min:6',
-        //     'pseudo' => 'required',
-        //     'birthday' => 'required',
-        //     'status' => 'required',
-        // ]);
+        $request->validate([
+            'lastname' => 'required',
+            'firstname' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'pseudo' => 'required',
+            'birthday' => 'required',
+            'status' => 'required',
+        ]);
 
         // Création d'un nouvel utilisateur
         $user = User::create([
