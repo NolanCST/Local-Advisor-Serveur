@@ -12,8 +12,9 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $places=Place::getAll();
+        return response()->json($places);
+    } 
 
     /**
      * Show the form for creating a new resource.
