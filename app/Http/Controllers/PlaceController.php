@@ -12,7 +12,7 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        $places=Place::all();
+        $places=Place::getAll();
         return response()->json($places);
     } 
 
