@@ -29,3 +29,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Registration
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
+
