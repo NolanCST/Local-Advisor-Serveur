@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// Reset Email
+Route::post('/send-reset-email', 'ResetPasswordController@sendResetEmail');
