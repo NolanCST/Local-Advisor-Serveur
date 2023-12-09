@@ -37,7 +37,7 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
-        //
+        return response()->json($place);
     }
 
     /**

@@ -33,4 +33,4 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
 // Accueil
-Route::get('/place', [PlaceController::class, 'index']);
+Route::resource('/place', PlaceController::class);
