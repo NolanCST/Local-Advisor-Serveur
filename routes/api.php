@@ -34,3 +34,5 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 
 // Accueil
 Route::resource('/place', PlaceController::class);
+
+Route::get('/detailsPlace', [PlaceController::class, 'show']);

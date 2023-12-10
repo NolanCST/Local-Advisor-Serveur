@@ -37,6 +37,7 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
+        $places = Place::all();
         return response()->json($place);
     }
 
