@@ -36,3 +36,4 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 Route::resource('/place', PlaceController::class);
 
 Route::get('/detailsPlace', [PlaceController::class, 'show']);
+Route::delete('/place/{id}', [PlaceController::class, 'destroy']);
