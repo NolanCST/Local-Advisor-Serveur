@@ -59,7 +59,7 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
-        $places = Place::all();
+        // $places = Place::all();
         return response()->json($place);
     }
 
@@ -84,13 +84,20 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        $place = Place::find($id);
+        // $place = Place::find($id);
     
-        if (!$place) {
-            return response()->json(['error' => 'ntm coté serveur'], 404);
+        // if (!$place) {
+        //     return response()->json(['error' => 'ntm coté serveur'], 404);
+        // }
+    
+        // $place->delete();
+        // return response()->json(['message' => 'Lieu supprimé avec succès']);
+        $result= Place::where('id',$id)->delete();
+        if ($result) {
+            return ['message' => 'Lieu supprimé avec succès'];
+        } else {
+            return ['message' => 'Lieu non supprimé'];
         }
     
-        $place->delete();
-        return response()->json(['message' => 'Lieu supprimé avec succès']);
     }
 }

@@ -18,9 +18,9 @@ use App\Http\Controllers\PlaceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 // Authentification
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -36,4 +36,4 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 Route::resource('/place', PlaceController::class);
 
 Route::get('/detailsPlace', [PlaceController::class, 'show']);
-Route::delete('/place/{id}', [PlaceController::class, 'destroy']);
+Route::delete('destroy/{id}', [PlaceController::class, 'destroy']);
