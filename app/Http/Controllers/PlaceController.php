@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Place;
+use App\Models\Rate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlaceController extends Controller
 {
@@ -37,8 +39,28 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
-        $places = Place::all();
-        return response()->json($place);
+        // Recuperation des notes
+        $ratings = Rate::with('user')->where('place_id', $place['id'])->orderBy('id', 'desc')->get()->toArray();
+
+        // Faire la moyenne des notes
+        $ratingsSum = Rate::where('place_id', $place['id'])->sum('rate');
+        $ratingsCount = Rate::where('place_id', $place['id'])->count();
+        $avgRating = 0;
+        $avgStarRating = 0;
+        if ($ratingsCount>0){
+            $avgRating = round($ratingsSum/$ratingsCount,2);
+            $avgStarRating = round($ratingsSum/$ratingsCount);
+        }
+
+        $responseData = [
+        'place' => $place,
+        'ratings' => $ratings,
+        'avgRating' => $avgRating,
+        'avgStarRating' => $avgStarRating,
+        'ratingsCount' => $ratingsCount,
+        ];
+
+        return response()->json($responseData);
     }
 
     /**
