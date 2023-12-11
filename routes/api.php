@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\RateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,6 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
 // Accueil
-Route::resource('/place', PlaceController::class);
+Route::resource('/places', PlaceController::class);
+
+Route::post('/rates/create', [RateController::class, 'addRating'])->name('rates.create');
