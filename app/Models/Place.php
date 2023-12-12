@@ -9,7 +9,7 @@ class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address','zip_code', 'city', 'description', 'image', 'coordinates', 'user_id'];
+    protected $fillable = ['name', 'address','zip_code', 'city', 'description', 'image', 'coordinates', 'user_id', ];
 
     public static function getAll() {
         return Place::select('places.*')->get();

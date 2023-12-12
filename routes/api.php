@@ -19,9 +19,9 @@ use App\Http\Controllers\RateController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 // Authentification
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -40,3 +40,5 @@ Route::resource('/places', PlaceController::class);
 Route::post('/rates/create', [RateController::class, 'addRating'])->name('rates.create');
 
 // Route::get('/detailsPlace', [PlaceController::class, 'show']);
+Route::get('/detailsPlace', [PlaceController::class, 'show']);
+Route::delete('destroy/{id}', [PlaceController::class, 'destroy']);
