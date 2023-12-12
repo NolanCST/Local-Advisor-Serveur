@@ -1,17 +1,17 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
+
 class ProfileController extends Controller
 {
     // Obtenir les données du profil de l'utilisateur
     public function getUserProfile()
     {
-        $user = Auth::user(); // Récupère l'utilisateur authentifié
+        $user = User::find(Auth::id());
 
         return response()->json($user);
     }
@@ -19,7 +19,7 @@ class ProfileController extends Controller
     // Mettre à jour les données du profil de l'utilisateur
     public function updateUserProfile(Request $request)
     {
-        $user = Auth::user(); // Récupère l'utilisateur authentifié
+        $user = User::find(Auth::id());
 
         // Validation des données du formulaire
         $request->validate([
@@ -31,7 +31,6 @@ class ProfileController extends Controller
         ]);
 
         // Mettre à jour les informations du profil
-        $user = new User;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
