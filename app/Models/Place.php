@@ -12,6 +12,12 @@ class Place extends Model
     protected $fillable = ['name', 'address','zip_code', 'city', 'description', 'image', 'coordinates', 'user_id', ];
 
     public static function getAll() {
-        return Place::select('places.*')->get();
+        return Place::select('places.*')
+            ->get();
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }
