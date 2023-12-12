@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('zip_code');
             $table->string('city', 50);
             $table->text('description');
-            $table->binary('image');
-            $table->string('coordinates', 50);
+            $table->binary('image')->nullable();
+            $table->string('coordinates', 50)->nullable();
             $table->timestamps();
         });
     }
