@@ -31,29 +31,28 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'adress' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'zip_code' => 'required|int|max:10',
-            'categories' => 'required|string|max:255',
-            'description' => 'required|string',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'address' => 'required|string|max:255',
+        //     'city' => 'required|string|max:255',
+        //     'zip_code' => 'required|int|max:10',
+        //     'description' => 'required|string',
+        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        // ]);
 
-        $place= new Place;
-        $place->name=$request->input('name');
-        $place->name=$request->input('adress');
-        $place->name=$request->input('city');
-        $place->name=$request->input('zip_code');
-        $place->name=$request->input('categories');
-        $place->name=$request->input('description');
-        $place->file_path=$request->file('image')->store('places');
-        $place->save();
-        return response()->json(['message'=>'Création réussie']);
+        if ($request->isMethod('POST')) {
+            $data = $request->all();
 
-
-
+            $place = new Place;
+            $place->name = $data['name'];
+            $place->address = $data['address'];
+            $place->city = $data['city'];
+            $place->zip_code = $data['zip_code'];
+            $place->description = $data['description'];
+            $place->user_id = $data['user_id'];
+            $place->save();
+            return response()->json(['message'=>'Création réussie']);
+        }
     }
 
     /**
@@ -104,22 +103,13 @@ class PlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Place $place)
     {
-        // $place = Place::find($id);
-    
-        // if (!$place) {
-        //     return response()->json(['error' => 'ntm coté serveur'], 404);
-        // }
-    
-        // $place->delete();
-        // return response()->json(['message' => 'Lieu supprimé avec succès']);
-        $result= Place::where('id',$id)->delete();
+        $result= $place->delete();
         if ($result) {
             return ['message' => 'Lieu supprimé avec succès'];
         } else {
             return ['message' => 'Lieu non supprimé'];
         }
-    
     }
 }

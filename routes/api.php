@@ -33,12 +33,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
-// Accueil
+// Toutes les routes de places
 Route::resource('/places', PlaceController::class);
 
 // Ajout d'un avis
 Route::post('/rates/create', [RateController::class, 'addRating'])->name('rates.create');
 
-// Route::get('/detailsPlace', [PlaceController::class, 'show']);
-Route::get('/detailsPlace', [PlaceController::class, 'show']);
-Route::delete('destroy/{id}', [PlaceController::class, 'destroy']);
