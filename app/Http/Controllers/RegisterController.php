@@ -32,12 +32,12 @@ class RegisterController extends Controller
             'status' => $request->status,
         ]);
 
-        // if ($user) {
-        //     // Utilisateur créé avec succès, retourne un JSON indiquant le succès
-        //     return response()->json(['message' => 'Utilisateur créé avec succès.'], 200);
-        // } else {
-        //     // Utilisateur non créé, retourne un JSON avec un message d'erreur
-        //     return response()->json(['message' => 'Erreur lors de la création du compte. Veuillez réessayer.'], 500);
-        // }
+        if ($user) {
+            // Utilisateur créé avec succès, retourne un JSON indiquant le succès
+            return response()->json(['message' => 'Utilisateur créé avec succès.'], 200);
+        } else {
+            // Utilisateur non créé, retourne un JSON avec un message d'erreur
+            return response()->json(['message' => 'Erreur lors de la création du compte. Veuillez réessayer.'], 500);
+        }
     }
 }

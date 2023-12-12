@@ -35,9 +35,6 @@ class AuthController extends Controller
         }
     }
 
-
-
-
     public function logout(Request $request)
     {
         Auth::logout(); // Déconnexion de l'utilisateur
