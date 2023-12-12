@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PasswordChangeController;
 
 
 /*
@@ -44,3 +45,6 @@ Route::get('/place', [PlaceController::class, 'index']);
 
 // Reset Email
 Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPasswordController'])->name('ResetPasswordController');
+
+// changement mot de passe
+Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
