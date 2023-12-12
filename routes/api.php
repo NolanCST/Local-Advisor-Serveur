@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\PasswordChangeController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -48,3 +49,7 @@ Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPassword
 
 // changement mot de passe
 Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
+
+// profil utilisateur
+Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
+Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
