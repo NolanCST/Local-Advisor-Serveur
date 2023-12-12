@@ -39,6 +39,5 @@ Route::resource('/places', PlaceController::class);
 // Ajout d'un avis
 Route::post('/rates/create', [RateController::class, 'addRating'])->name('rates.create');
 
-// Route::get('/detailsPlace', [PlaceController::class, 'show']);
-Route::get('/detailsPlace', [PlaceController::class, 'show']);
-Route::delete('destroy/{id}', [PlaceController::class, 'destroy']);
+// Supprimer un avis
+Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
