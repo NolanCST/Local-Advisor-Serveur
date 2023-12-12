@@ -109,7 +109,7 @@ class PlaceController extends Controller
         if ($result) {
             return ['message' => 'Lieu supprimé avec succès'];
         } else {
-            return ['message' => 'Lieu non supprimé'];
+            return ['message' => 'Erreur dans la suppression du lieu'];
         }
     }
 }
