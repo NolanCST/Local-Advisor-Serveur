@@ -39,7 +39,12 @@ class RateController extends Controller
     public function destroy(Rate $rate)
     {
         Storage::delete('public/images/'.$rate->image);
-        $rate->delete();
+        $result = $rate->delete();
+        if ($result) {
+            return ['message' => 'Avis supprimé avec succès'];
+        } else {
+            return ['message' => 'Errer dans la suppression de l\'avis'];
+        }
     }
 
     public function addRating (Request $request) {
