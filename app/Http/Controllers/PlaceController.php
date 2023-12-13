@@ -55,7 +55,7 @@ class PlaceController extends Controller
             $place->save();
 
             // if (isset($data['categories']) && is_array($data['categories'])) {
-                $place->categories()->attach($data['categories']);
+            $place->categories()->attach($data['categories']);
             // }
 
             return response()->json(['message'=>'Création réussie']);
