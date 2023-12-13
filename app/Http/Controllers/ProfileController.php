@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -19,26 +19,39 @@ class ProfileController extends Controller
     // Mettre à jour les données du profil de l'utilisateur
     public function updateUserProfile(Request $request)
     {
-        $user = User::find(Auth::id());
+        Log::info('Received PUT request at updateUserProfile method');
 
-        // Validation des données du formulaire
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email',
-            'age' => 'numeric|nullable',
-            'pseudo' => 'nullable',
-        ]);
+        try {
+            // Récupérer l'utilisateur actuellement authentifié
+            $user = User::find(Auth::id());
 
-        // Mettre à jour les informations du profil
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->age = $request->age;
-        $user->pseudo = $request->pseudo;
+            if (!$user) {
+                return response()->json(['error' => 'Utilisateur non trouvé'], 404);
+            }
 
-        $user->save();
+            // Validation des données du formulaire
+            $request->validate([
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|email',
+                'birthday' => 'numeric|nullable',
+                'pseudo' => 'nullable',
+            ]);
 
-        return response()->json(['message' => 'Profil utilisateur mis à jour avec succès']);
+            // Mettre à jour les informations du profil
+            $user->firstname = $request->input('firstname');
+            $user->lastname = $request->input('lastname');
+            $user->email = $request->input('email');
+            $user->birthday = $request->input('birthday');
+            $user->pseudo = $request->input('pseudo');
+
+            $user->save();
+
+            return response()->json(['message' => 'Profil utilisateur mis à jour avec succès']);
+        } catch (\Exception $e) {
+            Log::error('Error updating user profile: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+
 }

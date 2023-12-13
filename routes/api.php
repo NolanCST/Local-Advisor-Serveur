@@ -53,3 +53,4 @@ Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword
 // Profil utilisateur
 Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
 Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
+//Route::put('/api/user/profile/update', [ProfileController::class, 'updateUserProfile']);
