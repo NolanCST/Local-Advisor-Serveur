@@ -34,7 +34,7 @@ class ProfileController extends Controller
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'email' => 'required|email',
-                'birthday' => 'numeric|nullable',
+                'birthday' => 'nullable|date_format:Y-m-d',
                 'pseudo' => 'nullable',
             ]);
 
