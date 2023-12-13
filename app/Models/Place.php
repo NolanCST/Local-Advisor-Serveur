@@ -13,6 +13,7 @@ class Place extends Model
 
     public static function getAll() {
         return Place::select('places.*')
+            ->with('categories')
             ->get();
     }
 
