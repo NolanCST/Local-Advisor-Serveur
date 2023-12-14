@@ -6,8 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\NewAccessToken;
 
 // use Illuminate\Auth\Passwords\CanResetPassword;
 
@@ -57,4 +59,7 @@ class User extends Authenticatable
         $this->password = Hash::make($newPassword);
         $this->save();
     }
+
+
+
 }
