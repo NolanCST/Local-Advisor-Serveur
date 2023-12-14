@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResetPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 // Reset Email
-Route::post('/send-reset-email', 'ResetPasswordController@sendResetEmail');
+Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPasswordController'])->name('ResetPasswordController');
+

@@ -12,16 +12,15 @@ class ResetPasswordController extends Controller
             'email' => 'required|email|exists:users,email',
         ]);
 
-        $status = Password::sendResetLink(
+        // Créer un token de réinitialisation
+        $status = Password::broker()->sendResetLink(
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-        ? response()->json(['message' => 'Email de réinitialisation envoyé'])
-            : response()->json(['message' => 'Échec de l\'envoi de l\'email'], 500);
-    }
-    protected function broker()
-    {
-        return Password::broker();
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json(['message' => 'Email de réinitialisation envoyé']);
+        } else {
+            return response()->json(['message' => 'Échec de l\'envoi de l\'email'], 500);
+        }
     }
 }

@@ -1,3 +1,6 @@
+@php
+    $reset_url = Password::broker()->createUrl($token);
+@endphp
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,3 +20,5 @@
     <p>Votre équipe {{ config('app.name') }}</p>
 </body>
 </html>
+
+
