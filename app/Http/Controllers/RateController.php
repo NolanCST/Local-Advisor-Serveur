@@ -4,62 +4,61 @@ namespace App\Http\Controllers;
 
 use App\Models\Rate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class RateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Rate $rate)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Rate $rate)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Rate $rate)
     {
-        //
+
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'rate' => 'required',
+            'review' => 'max:1000',
+        ]);
+
+        Storage::delete('public/images/'.$rate->image);
+
+        $fileName = time() . '.' . $request->image->getClientOriginalName();
+        $path = $request->image->storeAs('public/images', $fileName);
+
+        $rate->image = $fileName;
+        $rate->rate = $request->rate;
+        $rate->review = $request->review;
+
+        $rate->save();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Rate $rate)
     {
-        //
+        Storage::delete('public/images/'.$rate->image);
+        $result = $rate->delete();
+        if ($result) {
+            return ['message' => 'Avis supprimé avec succès'];
+        } else {
+            return ['message' => 'Errer dans la suppression de l\'avis'];
+        }
     }
+
+    public function addRating (Request $request) {
+        if ($request->isMethod('POST')) {
+            $data = $request->all();
+
+            $rating = new Rate;
+            // $rating->user_id = Auth::user()->id;
+            $rating->user_id = $data['user_id'];
+            $rating->place_id = $data['place_id'];
+            $rating->review = $data['review'];
+            $rating->rate = $data['rate'];
+            $rating->save();
+        }
+    }
+
 }

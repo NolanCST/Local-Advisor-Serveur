@@ -9,7 +9,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\RateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,7 @@ use App\Http\Controllers\ProfileController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -41,9 +42,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
-// Accueil
-Route::get('/place', [PlaceController::class, 'index']);
-
 // Reset Email
 Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPasswordController'])->name('ResetPasswordController');
 
@@ -53,4 +51,12 @@ Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword
 // Profil utilisateur
 Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
 Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
-//Route::put('/api/user/profile/update', [ProfileController::class, 'updateUserProfile']);
+
+// Toutes les routes de places
+Route::resource('/places', PlaceController::class);
+
+// Ajout d'un avis
+Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
+
+// Supprimer un avis
+Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
