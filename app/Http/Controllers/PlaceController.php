@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Place;
 use App\Models\Rate;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,9 @@ class PlaceController extends Controller
      */
     public function create()
     {
-      //
+        $categories=Category::select('categories.*')
+            ->get();
+        return response()->json($categories);
     }
 
     /**
@@ -42,7 +45,6 @@ class PlaceController extends Controller
 
         if ($request->isMethod('POST')) {
             $data = $request->all();
-
             $place = new Place;
             $place->name = $data['name'];
             $place->address = $data['address'];
@@ -51,6 +53,11 @@ class PlaceController extends Controller
             $place->description = $data['description'];
             $place->user_id = $data['user_id'];
             $place->save();
+
+            if (isset($data['categories']) && is_array($data['categories'])) {
+            $place->categories()->attach($data['categories']);
+            }
+
             return response()->json(['message'=>'Création réussie']);
         }
     }

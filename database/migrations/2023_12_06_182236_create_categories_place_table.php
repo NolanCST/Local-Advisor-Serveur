@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories_affect', function (Blueprint $table) {
+        Schema::create('category_place', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories_affect');
+        Schema::dropIfExists('categories_place');
     }
 };
