@@ -54,9 +54,9 @@ class PlaceController extends Controller
             $place->user_id = $data['user_id'];
             $place->save();
 
-            // if (isset($data['categories']) && is_array($data['categories'])) {
+            if (isset($data['categories']) && is_array($data['categories'])) {
             $place->categories()->attach($data['categories']);
-            // }
+            }
 
             return response()->json(['message'=>'Création réussie']);
         }
