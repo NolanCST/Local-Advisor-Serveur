@@ -51,6 +51,6 @@ Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPassword
 Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
 
 // Profil utilisateur
-Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
 Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
+Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
 //Route::put('/api/user/profile/update', [ProfileController::class, 'updateUserProfile']);
