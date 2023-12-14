@@ -48,7 +48,6 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
 // Reset Email
-//Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('sendResetEmail');
 Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('password.reset');
 
 // changement mot de passe
