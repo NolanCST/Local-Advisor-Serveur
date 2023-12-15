@@ -80,6 +80,9 @@ class PlaceController extends Controller
             $avgStarRating = round($ratingsSum/$ratingsCount);
         }
 
+        // Récupération des catégories
+        $place = Place::select('places.*')->where('id', $place['id'])->with('categories')->get();
+
         $responseData = [
         'place' => $place,
         'ratings' => $ratings,
@@ -87,7 +90,6 @@ class PlaceController extends Controller
         'avgStarRating' => $avgStarRating,
         'ratingsCount' => $ratingsCount,
         ];
-
         return response()->json($responseData);
     }
 
