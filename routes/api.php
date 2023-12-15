@@ -23,8 +23,13 @@ use App\Http\Controllers\RateController;
 */
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
+
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
@@ -43,13 +48,12 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
 // Reset Email
-Route::post('/send-reset-email', [ResetPasswordController::class, 'ResetPasswordController'])->name('ResetPasswordController');
+Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('password.reset');
 
 // changement mot de passe
 Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
 
 // Profil utilisateur
-Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
 Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
 
 // Toutes les routes de places

@@ -20,11 +20,10 @@ class ProfileController extends Controller
     public function updateUserProfile(Request $request)
     {
         Log::info('Received PUT request at updateUserProfile method');
-
+        Log::info($request->user()->id);
         try {
             // Récupérer l'utilisateur actuellement authentifié
-            $user = User::find(Auth::id());
-
+            $user = $request->user();
             if (!$user) {
                 return response()->json(['error' => 'Utilisateur non trouvé'], 404);
             }
