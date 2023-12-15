@@ -50,8 +50,13 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 // Reset Email
 Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('password.reset');
 
-// changement mot de passe
-Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
+// formulaire de réinitialisation de mot de passe
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+// réinitialisation du mot de passe
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->name('password.update');
 
 // Profil utilisateur
 Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
