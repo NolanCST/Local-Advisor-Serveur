@@ -16,7 +16,14 @@ class PlaceController extends Controller
     public function index()
     {
         $places=Place::getAll();
-        return response()->json($places);
+        $categories=Category::getAll();
+
+        $responseDate = [
+            "places" => $places,
+            "categories" => $categories,
+        ];
+
+        return response()->json($responseDate);
     }
 
     /**
@@ -90,6 +97,7 @@ class PlaceController extends Controller
         'avgStarRating' => $avgStarRating,
         'ratingsCount' => $ratingsCount,
         ];
+
         return response()->json($responseData);
     }
 
