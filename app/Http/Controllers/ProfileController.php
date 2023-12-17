@@ -12,7 +12,6 @@ class ProfileController extends Controller
     public function getUserProfile()
     {
         $user = User::find(Auth::id());
-
         return response()->json($user);
     }
 
@@ -24,6 +23,7 @@ class ProfileController extends Controller
         try {
             // Récupérer l'utilisateur actuellement authentifié
             $user = $request->user();
+            dd($user);
             if (!$user) {
                 return response()->json(['error' => 'Utilisateur non trouvé'], 404);
             }
