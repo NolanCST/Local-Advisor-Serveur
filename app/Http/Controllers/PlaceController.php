@@ -50,6 +50,9 @@ class PlaceController extends Controller
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         // ]);
 
+        $fileName = time() . '.' . $request->image->getClientOriginalName();
+        $path = $request->image->storeAs('public/images', $fileName);
+
         if ($request->isMethod('POST')) {
             $data = $request->all();
             $place = new Place;
@@ -58,6 +61,7 @@ class PlaceController extends Controller
             $place->city = $data['city'];
             $place->zip_code = $data['zip_code'];
             $place->description = $data['description'];
+            $place->image = $fileName;
             $place->user_id = $data['user_id'];
             $place->save();
 

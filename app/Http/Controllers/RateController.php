@@ -46,6 +46,7 @@ class RateController extends Controller
 
 
     public function addRating (Request $request) {
+        
         $fileName = time() . '.' . $request->image->getClientOriginalName();
         $path = $request->image->storeAs('public/images', $fileName);
 
