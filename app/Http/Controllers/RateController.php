@@ -46,17 +46,19 @@ class RateController extends Controller
 
 
     public function addRating (Request $request) {
+        $fileName = time() . '.' . $request->image->getClientOriginalName();
+        $path = $request->image->storeAs('public/images', $fileName);
 
-        if ($request->isMethod('POST')) {
-            $data = $request->all();
+        $data = $request->all();
 
-            $rating = new Rate;
-            $rating->user_id = $request->user()->id;
-            $rating->place_id = $data['place_id'];
-            $rating->review = $data['review'];
-            $rating->rate = $data['rate'];
-            $rating->save();
-        }
+        $rating = new Rate;
+        $rating->user_id = $request->user()->id;
+        $rating->place_id = $data['place_id'];
+        $rating->image = $fileName;
+        $rating->review = $data['review'];
+        $rating->rate = $data['rate'];
+        $rating->save();
+
     }
 
 }
