@@ -53,6 +53,7 @@ Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmai
 // formulaire de réinitialisation de mot de passe
 Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
     ->name('password.reset');
+Route::get('reset-password/token/{token}', [ResetPasswordController::class, 'getToken']);
 
 // réinitialisation du mot de passe
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])

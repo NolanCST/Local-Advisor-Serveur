@@ -24,7 +24,15 @@ class ResetPasswordController extends Controller
             return response()->json(['message' => 'Échec de l\'envoi de l\'email'], 500);
         }
     }
-
+    // Méthode pour récupérer le token
+    public function getToken($token)
+    {
+        $tokenData = [
+            'token' => $token,
+        ];
+        // Retourne les données au format JSON
+        return response()->json($tokenData);
+    }
     // Réinitialiser le mot de passe
     public function resetPassword(Request $request)
     {
