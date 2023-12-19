@@ -13,7 +13,7 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Place $place)
     {
         $places=Place::getAll();
         $categories=Category::getAll();

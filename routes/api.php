@@ -33,9 +33,7 @@ Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile
 
 // Ajout d'un avis
 Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
-
-// Supprimer un avis
-Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
+  
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
@@ -64,6 +62,12 @@ Route::get('reset-password/token/{token}', [ResetPasswordController::class, 'get
 // réinitialisation du mot de passe
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
     ->name('password.update');
+
+// Supprimer un avis
+Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
+
+// Modifier un avis
+Route::put('/rates/{rate}', [RateController::class, 'update'])->name('rates.update');
 
 // Toutes les routes de places
 Route::resource('/places', PlaceController::class);
