@@ -15,16 +15,10 @@ class RateController extends Controller
     {
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'rate' => 'required|min:1',
+            'rate' => 'required|min:1|max:5',
             'review' => 'max:1000',
         ]);
 
-        // Storage::delete('public/images/'.$rate->image);
-
-        // $fileName = time() . '.' . $request->image->getClientOriginalName();
-        // $path = $request->image->storeAs('public/images', $fileName);
-
-        // $rate->image = $fileName;
         $rate->rate = $request->rate;
         $rate->review = $request->review;
 
@@ -43,8 +37,6 @@ class RateController extends Controller
             return ['message' => 'Errer dans la suppression de l\'avis'];
         }
     }
-
-
 
     public function addRating (Request $request) {
         
