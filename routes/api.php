@@ -36,7 +36,6 @@ Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create'
 
 // Supprimer un avis
 Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
-
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
@@ -57,8 +56,14 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 // Reset Email
 Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('password.reset');
 
-// changement mot de passe
-Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
+// formulaire de réinitialisation de mot de passe
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+Route::get('reset-password/token/{token}', [ResetPasswordController::class, 'getToken']);
+
+// réinitialisation du mot de passe
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->name('password.update');
 
 // Toutes les routes de places
 Route::resource('/places', PlaceController::class);
