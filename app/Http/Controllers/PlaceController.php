@@ -69,7 +69,7 @@ class PlaceController extends Controller
             $place->categories()->attach($data['categories']);
             }
 
-            return response()->json(['message'=>'Création réussie']);
+            return response()->json(['message'=>'Création du lieu réussie']);
         }
     }
 

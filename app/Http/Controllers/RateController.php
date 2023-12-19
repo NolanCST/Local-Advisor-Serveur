@@ -53,7 +53,7 @@ class RateController extends Controller
         $rating->rate = $data['rate'];
         $rating->save();
 
-        return response()->json(['message'=>'Votre avis a bien ete cree']);
+        return response()->json(['message'=>'Votre avis a bien été crée']);
     }
 
 }
