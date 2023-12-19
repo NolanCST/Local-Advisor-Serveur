@@ -14,6 +14,9 @@ class Place extends Model
     public static function getAll() {
         return Place::select('places.*')
             ->with('categories')
+            ->leftJoin('rates', 'places.id', '=', 'rates.place_id')
+            ->selectRaw('places.*, COUNT(rates.id) as total_rates, ROUND(AVG(rates.rate), 1) as average_rating')
+            ->groupBy('places.id')
             ->get();
     }
 
