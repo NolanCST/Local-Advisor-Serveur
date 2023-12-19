@@ -33,7 +33,7 @@ Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile
 
 // Ajout d'un avis
 Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
-
+  
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
@@ -54,8 +54,14 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 // Reset Email
 Route::post('/send-reset-email', [ResetPasswordController::class, 'sendResetEmail'])->name('password.reset');
 
-// changement mot de passe
-Route::post('/passwordChange', [PasswordChangeController::class, 'changePassword']);
+// formulaire de réinitialisation de mot de passe
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+Route::get('reset-password/token/{token}', [ResetPasswordController::class, 'getToken']);
+
+// réinitialisation du mot de passe
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->name('password.update');
 
 // Supprimer un avis
 Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
