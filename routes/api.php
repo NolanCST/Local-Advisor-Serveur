@@ -24,11 +24,18 @@ use App\Http\Controllers\RateController;
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
 
+// Profil utilisateur
+Route::get('/user', function (Request $request) {return $request->user();});
+
+// Modification du profil
 Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
+
+// Ajout d'un avis
+Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
+
+// Supprimer un avis
+Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
@@ -58,14 +65,5 @@ Route::get('reset-password/token/{token}', [ResetPasswordController::class, 'get
 Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
     ->name('password.update');
 
-// Profil utilisateur
-Route::get('/user/profile', [ProfileController::class, 'getUserProfile']);
-
 // Toutes les routes de places
 Route::resource('/places', PlaceController::class);
-
-// Ajout d'un avis
-Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
-
-// Supprimer un avis
-Route::delete('/rates/{rate}', [RateController::class, 'destroy'])->name('rates.destroy');

@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
-    // Obtenir les données du profil de l'utilisateur
-    public function getUserProfile()
-    {
-        $user = User::find(Auth::id());
-
-        return response()->json($user);
-    }
-
     // Mettre à jour les données du profil de l'utilisateur
     public function updateUserProfile(Request $request)
     {
@@ -24,6 +16,7 @@ class ProfileController extends Controller
         try {
             // Récupérer l'utilisateur actuellement authentifié
             $user = $request->user();
+            dd($user);
             if (!$user) {
                 return response()->json(['error' => 'Utilisateur non trouvé'], 404);
             }
