@@ -29,7 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile']);
-
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
