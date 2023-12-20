@@ -45,7 +45,7 @@ class PlaceController extends Controller
         //     'name' => 'required|string|max:255',
         //     'address' => 'required|string|max:255',
         //     'city' => 'required|string|max:255',
-        //     'zip_code' => 'required|int|max:10',
+        //     'zip_code' => 'required|string|max:10',
         //     'description' => 'required|string',
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         // ]);
@@ -116,9 +116,20 @@ class PlaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Place $place)
+    public function update(Request $request, $id)
     {
-        //
+        $place = Place::findOrFail($id); // Trouve lieu par son ID
+
+        // Mise à jour des champs avec les données du formulaire
+        $place->update([
+            'name' => $request->input('name'),
+            'address' => $request->input('address'),
+            'city' => $request->input('city'),
+            'zip_code' => $request->input('zip_code'),
+            'description' => $request->input('description'),
+        ]);
+
+        return response()->json(['message' => 'Lieu mis à jour', 'place' => $place]);
     }
 
     /**
