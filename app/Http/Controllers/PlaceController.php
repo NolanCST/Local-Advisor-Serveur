@@ -97,6 +97,9 @@ class PlaceController extends Controller
         // Récupération des catégories
         $place = Place::select('places.*')->where('id', $place['id'])->with('categories')->get();
 
+        // // Recuperation des images
+        // $place->image = asset('storage/images/' . $place->image);
+
         $responseData = [
         'place' => $place,
         'ratings' => $ratings,
