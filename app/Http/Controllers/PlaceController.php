@@ -129,7 +129,7 @@ class PlaceController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        return response()->json(['message' => 'Lieu mis à jour', 'place' => $place]);
+        return response()->json(['message'=>'Modification du lieu réussie']);
     }
 
     /**
