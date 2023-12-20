@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rate;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -10,30 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class RateController extends Controller
 {
 
-    public function edit(Rate $rate)
-    {
-
-    }
-
     public function update(Request $request, Rate $rate)
     {
-
         $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'rate' => 'required',
+            'rate' => 'required|min:1|max:5',
             'review' => 'max:1000',
         ]);
 
-        Storage::delete('public/images/'.$rate->image);
-
-        $fileName = time() . '.' . $request->image->getClientOriginalName();
-        $path = $request->image->storeAs('public/images', $fileName);
-
-        $rate->image = $fileName;
         $rate->rate = $request->rate;
         $rate->review = $request->review;
 
         $rate->save();
+
+        return response()->json(['message'=>'Modification de l\'avis réussie']);
     }
 
     public function destroy(Rate $rate)
@@ -48,17 +39,21 @@ class RateController extends Controller
     }
 
     public function addRating (Request $request) {
-        if ($request->isMethod('POST')) {
-            $data = $request->all();
+        
+        $fileName = time() . '.' . $request->image->getClientOriginalName();
+        $path = $request->image->storeAs('public/images', $fileName);
 
-            $rating = new Rate;
-            // $rating->user_id = Auth::user()->id;
-            $rating->user_id = $data['user_id'];
-            $rating->place_id = $data['place_id'];
-            $rating->review = $data['review'];
-            $rating->rate = $data['rate'];
-            $rating->save();
-        }
+        $data = $request->all();
+
+        $rating = new Rate;
+        $rating->user_id = $request->user()->id;
+        $rating->place_id = $data['place_id'];
+        $rating->image = $fileName;
+        $rating->review = $data['review'];
+        $rating->rate = $data['rate'];
+        $rating->save();
+
+        return response()->json(['message'=>'Votre avis a bien été crée']);
     }
 
 }

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -19,31 +24,22 @@ class AuthController extends Controller
         return response()->json(['message' => 'Cette action n\'est pas autorisée.'], 403);
     }
 
-    public function login(Request $request)
+    public function Login(Request $request)
     {
-        // Validation des données du formulaire de connexion
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        // Tentative d'authentification de l'utilisateur
         if (Auth::attempt($credentials)) {
-            // Authentification réussie, retourne un JSON indiquant le succès
-            return response()->json(['message' => 'Authentification réussie.'], 200);
+            $token = Auth::user()->createToken('authToken')->plainTextToken;
+            return ['token' => $token];
         }
-
-        // En cas d'échec de l'authentification, retourne un JSON avec un message d'erreur
-        return response()->json(['message' => 'Email ou mot de passe incorrect.'], 401);
     }
 
     public function logout(Request $request)
     {
         Auth::logout(); // Déconnexion de l'utilisateur
-
-        $request->session()->invalidate(); // Effacement de la session
-
-        $request->session()->regenerateToken(); // Régénération du token de session
 
         // Retourne un JSON indiquant le succès de la déconnexion
         return response()->json(['message' => 'Déconnexion réussie.'], 200);

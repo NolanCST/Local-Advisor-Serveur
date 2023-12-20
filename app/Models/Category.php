@@ -12,4 +12,9 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = ['name'];
+
+    public static function getAll() {
+        return Category::select('categories.name')
+            ->get();
+    }
 }

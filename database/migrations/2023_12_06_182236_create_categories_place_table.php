@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Category;
 
 return new class extends Migration
 {
@@ -12,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories_affect', function (Blueprint $table) {
-            $table->foreignIdFor(Category::class)->constrained();
+        Schema::create('category_place', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories_affect', function (Blueprint $table) {
-            $table->dropForeignIdFor(Category::class);
-            $table->dropColumn('id_categories');
-        });
+        Schema::dropIfExists('categories_place');
     }
 };

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Place;
 use App\Models\Rate;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,20 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Place $place)
     {
         $places=Place::getAll();
-        return response()->json($places);
+        foreach ($places as $place) {
+            $place->image = asset('storage/images/' . $place->image);
+        }
+        $categories=Category::getAll();
+
+        $responseDate = [
+            "places" => $places,
+            "categories" => $categories,
+        ];
+
+        return response()->json($responseDate);
     }
 
     /**
@@ -23,7 +34,9 @@ class PlaceController extends Controller
      */
     public function create()
     {
-      //
+        $categories=Category::select('categories.*')
+            ->get();
+        return response()->json($categories);
     }
 
     /**
@@ -40,18 +53,26 @@ class PlaceController extends Controller
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         // ]);
 
+        $fileName = time() . '.' . $request->image->getClientOriginalName();
+        $path = $request->image->storeAs('public/images', $fileName);
+
         if ($request->isMethod('POST')) {
             $data = $request->all();
-
             $place = new Place;
             $place->name = $data['name'];
             $place->address = $data['address'];
             $place->city = $data['city'];
             $place->zip_code = $data['zip_code'];
             $place->description = $data['description'];
+            $place->image = $fileName;
             $place->user_id = $data['user_id'];
             $place->save();
-            return response()->json(['message'=>'Création réussie']);
+
+            if (isset($data['categories']) && is_array($data['categories'])) {
+            $place->categories()->attach($data['categories']);
+            }
+
+            return response()->json(['message'=>'Création du lieu réussie']);
         }
     }
 
@@ -72,6 +93,9 @@ class PlaceController extends Controller
             $avgRating = round($ratingsSum/$ratingsCount,2);
             $avgStarRating = round($ratingsSum/$ratingsCount);
         }
+
+        // Récupération des catégories
+        $place = Place::select('places.*')->where('id', $place['id'])->with('categories')->get();
 
         $responseData = [
         'place' => $place,

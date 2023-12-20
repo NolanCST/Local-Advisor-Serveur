@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('address', 100);
-            $table->integer('zip_code');
+            $table->string('zip_code', 5);
             $table->string('city', 50);
             $table->text('description');
             $table->binary('image')->nullable();
