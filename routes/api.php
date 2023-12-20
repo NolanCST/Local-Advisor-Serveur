@@ -33,7 +33,7 @@ Route::put('/user/profile/update', [ProfileController::class, 'updateUserProfile
 
 // Ajout d'un avis
 Route::post('/rates', [RateController::class, 'addRating'])->name('rates.create');
-  
+
 });
 
 Route::get('dashboard', [AuthController:: class, 'dashboard'])
