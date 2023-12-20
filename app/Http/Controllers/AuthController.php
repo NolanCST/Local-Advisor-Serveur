@@ -41,10 +41,6 @@ class AuthController extends Controller
     {
         Auth::logout(); // Déconnexion de l'utilisateur
 
-        $request->session()->invalidate(); // Effacement de la session
-
-        $request->session()->regenerateToken(); // Régénération du token de session
-
         // Retourne un JSON indiquant le succès de la déconnexion
         return response()->json(['message' => 'Déconnexion réussie.'], 200);
     }

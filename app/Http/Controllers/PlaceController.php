@@ -16,6 +16,9 @@ class PlaceController extends Controller
     public function index(Place $place)
     {
         $places=Place::getAll();
+        foreach ($places as $place) {
+            $place->image = asset('storage/images/' . $place->image);
+        }
         $categories=Category::getAll();
 
         $responseDate = [
