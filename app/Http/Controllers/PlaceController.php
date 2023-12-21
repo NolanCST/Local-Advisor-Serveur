@@ -44,14 +44,14 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'address' => 'required|string|max:255',
-        //     'city' => 'required|string|max:255',
-        //     'zip_code' => 'required|int|max:10',
-        //     'description' => 'required|string',
-        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        // ]);
+        $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required|max:255',
+            'city' => 'required|max:255',
+            'zip_code' => 'required|max:10',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
 
         $fileName = time() . '.' . $request->image->getClientOriginalName();
         $path = $request->image->storeAs('public/images', $fileName);
