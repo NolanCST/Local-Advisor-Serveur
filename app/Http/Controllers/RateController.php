@@ -46,7 +46,7 @@ class RateController extends Controller
         $data = $request->all();
 
         $rating = new Rate;
-        $rating->user_id = $request->user()->id;
+        $rating->user_id = Auth::user()->id;
         $rating->place_id = $data['place_id'];
         $rating->image = $fileName;
         $rating->review = $data['review'];
