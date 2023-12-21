@@ -123,9 +123,20 @@ class PlaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Place $place)
+    public function update(Request $request, $id)
     {
-        //
+        $place = Place::findOrFail($id); // Trouve lieu par son ID
+
+        // Mise à jour des champs avec les données du formulaire
+        $place->update([
+            'name' => $request->input('name'),
+            'address' => $request->input('address'),
+            'city' => $request->input('city'),
+            'zip_code' => $request->input('zip_code'),
+            'description' => $request->input('description'),
+        ]);
+
+        return response()->json(['message'=>'Modification du lieu réussie']);
     }
 
     /**
