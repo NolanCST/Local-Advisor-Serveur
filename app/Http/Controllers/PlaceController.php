@@ -44,14 +44,14 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'address' => 'required|string|max:255',
-        //     'city' => 'required|string|max:255',
-        //     'zip_code' => 'required|int|max:10',
-        //     'description' => 'required|string',
-        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        // ]);
+        $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required|max:255',
+            'city' => 'required|max:255',
+            'zip_code' => 'required|max:10',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
 
         $fileName = time() . '.' . $request->image->getClientOriginalName();
         $path = $request->image->storeAs('public/images', $fileName);
@@ -97,6 +97,10 @@ class PlaceController extends Controller
         // Récupération des catégories
         $place = Place::select('places.*')->where('id', $place['id'])->with('categories')->get();
 
+        foreach ($place as $element) {
+            $element->image = asset('storage/images/' . $element->image);
+        }
+
         $responseData = [
         'place' => $place,
         'ratings' => $ratings,
@@ -119,9 +123,20 @@ class PlaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Place $place)
+    public function update(Request $request, $id)
     {
-        //
+        $place = Place::findOrFail($id); // Trouve lieu par son ID
+
+        // Mise à jour des champs avec les données du formulaire
+        $place->update([
+            'name' => $request->input('name'),
+            'address' => $request->input('address'),
+            'city' => $request->input('city'),
+            'zip_code' => $request->input('zip_code'),
+            'description' => $request->input('description'),
+        ]);
+
+        return response()->json(['message'=>'Modification du lieu réussie']);
     }
 
     /**
